@@ -27,34 +27,7 @@ public class State
         }
         return false;
     }
-    boolean passCannibalSide()
-    {
-        if(left_cannibals>0 && loadBoat() && this.boat=='L')
-        {
-            if(left_cannibals-1<=left_missionaries && right_missionaries>=right_cannibals+1)
-            {
-                this.boat='R';
-                left_cannibals--;
-                right_cannibals++;
-                return true;
-            }
-        }
-        return false;
-    }
-    boolean passMissionersSide()
-    {
-        if(left_missionaries>0 && loadBoat() && this.boat=='L')
-        {
-            if(left_cannibals<=left_missionaries-1 && right_missionaries+1>=right_cannibals)
-            {
-                this.boat='R';
-                left_missionaries--;
-                right_missionaries++;
-                return true;
-            }
-        }
-        return false;
-    }
+
     boolean loadBoat()
     {
         if(this.boat_seats-1>=0)return true ; //maybe need too ensure that someone drives the boat
@@ -77,10 +50,11 @@ public class State
         ArrayList<State> children = new ArrayList<>();
         if(boat=='L') {
             //@TODO CHEAK IF LOOP IS CORRECT
-            for(int i=0;i<=max_seats;i++) {
+            for(int i=1;i<=max_seats;i++) {
                 for(int j=max_seats-i;j>=0;j--) {
-                    State child = new State(right_cannibals+i, left_cannibals - i, right_missionaries+j, left_missionaries-j, 'L', boat_seats);
+                    State child = new State(right_cannibals+i, left_cannibals - i, right_missionaries+j, left_missionaries-j, 'R', boat_seats);
                     if (child.canPass()) {
+
                         children.add(child);
                         child.setFather(this);
                     }
@@ -89,10 +63,11 @@ public class State
             }
         }
         else {
-            for(int i=0;i<=max_seats;i++) {
+            for(int i=1;i<=max_seats;i++) {
                 for(int j=max_seats-i;j>=0;j--) {
-                    State child = new State(right_cannibals-i, left_cannibals + i, right_missionaries-j, left_missionaries+j, 'R', boat_seats);
+                    State child = new State(right_cannibals-i, left_cannibals + i, right_missionaries-j, left_missionaries+j, 'L', boat_seats);
                     if (child.canPass()) {
+
                         children.add(child);
                         child.setFather(this);
                     }
@@ -101,5 +76,16 @@ public class State
             }
         }
         return children;
+    }
+
+    @Override
+    public String toString() {
+        return "State{" +
+                "left_cannibals=" + this.left_cannibals +
+                ", left_missionaries=" + this.left_missionaries +
+                ", right_cannibals=" + this.right_cannibals +
+                ", right_missionaries=" + this.right_missionaries +
+                ", father=" + this.father +
+                '}'+"\n";
     }
 }
