@@ -49,11 +49,12 @@ public class State
     {
         ArrayList<State> children = new ArrayList<>();
         if(boat=='L') {
-            //@TODO CHEAK IF LOOP IS CORRECT
+            //@TODO Make it close set
+            //@TODO Stop single pass
             for(int i=1;i<=max_seats;i++) {
                 for(int j=max_seats-i;j>=0;j--) {
                     State child = new State(right_cannibals+i, left_cannibals - i, right_missionaries+j, left_missionaries-j, 'R', boat_seats);
-                    if (child.canPass()) {
+                    if (child.canPass()&& !child.equals(this.father)) {
 
                         children.add(child);
                         child.setFather(this);
@@ -66,7 +67,7 @@ public class State
             for(int i=1;i<=max_seats;i++) {
                 for(int j=max_seats-i;j>=0;j--) {
                     State child = new State(right_cannibals-i, left_cannibals + i, right_missionaries-j, left_missionaries+j, 'L', boat_seats);
-                    if (child.canPass()) {
+                    if (child.canPass() && !child.equals(this.father)) {
 
                         children.add(child);
                         child.setFather(this);
@@ -83,9 +84,8 @@ public class State
         return "State{" +
                 "left_cannibals=" + this.left_cannibals +
                 ", left_missionaries=" + this.left_missionaries +
-                ", right_cannibals=" + this.right_cannibals +
-                ", right_missionaries=" + this.right_missionaries +
+                ",boat"+this.boat+
                 ", father=" + this.father +
-                '}'+"\n";
+                '}';
     }
 }

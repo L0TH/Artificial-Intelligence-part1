@@ -17,7 +17,14 @@ public class Main {
         {
             System.out.println(a.get(i).getChildren());
         }
+        for (int i=0; i<a.size();i++) {
+            ArrayList<State> b= (a.get(i).getChildren());
+            for (int j=0; j<b.size();j++)
+            {
+                System.out.println(b.get(j).getChildren());
+            }
+        }
 
-    }
+        }
 
 }
