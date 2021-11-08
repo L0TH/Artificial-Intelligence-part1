@@ -78,14 +78,23 @@ public class State
         }
         return children;
     }
-
+    @Override
+    public int hashCode()
+    {
+        return this.left_cannibals + this.left_missionaries + this.right_cannibals+this.right_missionaries+this.identifier() ;//add others
+    }
     @Override
     public String toString() {
         return "State{" +
                 "left_cannibals=" + this.left_cannibals +
                 ", left_missionaries=" + this.left_missionaries +
                 ",boat"+this.boat+
+                ",id "+this.identifier()+
                 ", father=" + this.father +
                 '}';
+    }
+    int identifier()
+    {
+        return (int) (Math.pow(2,(2*0)+0*this.left_cannibals)+Math.pow(2,(2*0)+1*this.right_cannibals)+Math.pow(2,(2*1)+0*this.left_missionaries)+Math.pow(2,(2*1)+1*this.right_missionaries));
     }
 }
