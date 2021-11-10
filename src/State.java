@@ -122,7 +122,7 @@ public class State implements Comparable<State> {
 
     }
     @Override
-   
+
     public boolean equals(Object obj)
     {
         if(this.left_missionaries != ((State)obj).left_missionaries) return false;

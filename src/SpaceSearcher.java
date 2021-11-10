@@ -33,9 +33,11 @@ public class SpaceSearcher
             }
             if(currentState.max_steps==0)
             {
-                flag=true;
+                System.out.println("Max moves reached");
+                return null;
+
             }
-            if(!closedSet.contains(currentState) && flag!=true)
+            if(!closedSet.contains(currentState) )
             {
                 this.closedSet.add(currentState);
                 this.child=currentState.getChildren();
@@ -49,10 +51,7 @@ public class SpaceSearcher
                 Collections.sort(this.states);
             }
         }
-        if(flag)
-        {
-            System.out.println("Max moves reached");
-        }
+
         return null;
     }
 }
