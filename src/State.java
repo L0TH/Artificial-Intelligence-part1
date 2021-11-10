@@ -1,4 +1,4 @@
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +13,7 @@ public class State implements Comparable<State> {
     private State father=null;
     private int score;
     int max_steps;
-    //@TODO add max steps
+
 
     public State(int left_cannibals,int  boat_seats,int max_steps)
     {
@@ -122,7 +122,7 @@ public class State implements Comparable<State> {
 
     }
     @Override
-    //@TODO FIX
+   
     public boolean equals(Object obj)
     {
         if(this.left_missionaries != ((State)obj).left_missionaries) return false;
@@ -140,7 +140,7 @@ public class State implements Comparable<State> {
 
 
     @Override
-    public int compareTo(@NotNull State s)
+    public int compareTo( State s)
     {
         return Double.compare(this.score, s.score); // compare based on the heuristic score.
     }
