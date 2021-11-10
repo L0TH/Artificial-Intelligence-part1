@@ -1,30 +1,36 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Main {
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         System.out.println("hello main");
-        State initialState= new  State(0,3,0,3,'L',2);
-
-        ArrayList<State> a=initialState.getChildren();
-
-        for (int i=0; i<a.size();i++)
+        State initialState = new State(0, 3, 0, 3, 'L', 2);
+        SpaceSearcher searcher = new SpaceSearcher();
+        State terminalState = searcher.BestFSClosedSet(initialState);
+        ArrayList<State> a = initialState.getChildren();
+        if(terminalState == null) System.out.println("Could not find a solution.");
+        else
         {
-            System.out.println(a.get(i));
-        }
-        for (int i=0; i<a.size();i++)
-        {
-            System.out.println(a.get(i).getChildren());
-        }
-        for (int i=0; i<a.size();i++) {
-            ArrayList<State> b= (a.get(i).getChildren());
-            for (int j=0; j<b.size();j++)
+            // print the path from beggining to start.
+            State temp = terminalState; // begin from the end.
+            ArrayList<State> path = new ArrayList<>();
+            while(temp.getFather() != null) // if father is null, then we are at the root.
             {
-                System.out.println(b.get(j).getChildren());
+                path.add(temp.getFather());
+                temp = temp.getFather();
             }
-        }
+            // reverse the path and print.
+            Collections.reverse(path);
+            for(State item: path)
+            {
+                item.toString();
+            }
+            System.out.println();
 
         }
+
+
+    }
 
 }

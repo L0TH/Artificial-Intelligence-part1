@@ -1,12 +1,17 @@
-import java.util.ArrayList;
+import org.jetbrains.annotations.NotNull;
 
-public class State
-{
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+
+public class State implements Comparable<State> {
     private int left_cannibals,left_missionaries=0;
     private int right_cannibals,right_missionaries=0;
     private char boat;//boat location "L" for Left "R" for  Right
     private int boat_seats,max_seats;
     private State father=null;
+    private int score=0;
 
     public State(int right_cannibals,int left_cannibals, int right_missionaries,int left_missionaries, char boat, int  boat_seats)
     {
@@ -45,6 +50,11 @@ public class State
     {
         this.father=father;
     }
+    State getFather()
+    {
+        return this.father;
+    }
+
     ArrayList<State> getChildren()
     {
         ArrayList<State> children = new ArrayList<>();
@@ -55,7 +65,7 @@ public class State
                 for(int j=max_seats-i;j>=0;j--) {
                     State child = new State(right_cannibals+i, left_cannibals - i, right_missionaries+j, left_missionaries-j, 'R', boat_seats);
                     if (child.canPass()&& !child.equals(this.father)) {
-
+                        child.evaluate();
                         children.add(child);
                         child.setFather(this);
                     }
@@ -68,7 +78,7 @@ public class State
                 for(int j=max_seats-i;j>=0;j--) {
                     State child = new State(right_cannibals-i, left_cannibals + i, right_missionaries-j, left_missionaries+j, 'L', boat_seats);
                     if (child.canPass() && !child.equals(this.father)) {
-
+                        child.evaluate();
                         children.add(child);
                         child.setFather(this);
                     }
@@ -78,6 +88,29 @@ public class State
         }
         return children;
     }
+    private void evaluate()
+    {
+        if(boat_seats>1)
+        {
+            this.score= (int) (Math.ceil(2*(this.left_cannibals+this.left_missionaries)-3)/(this.boat_seats-1)+1);
+        }
+    }
+
+    int identifier()
+    {
+        return (int) (Math.pow(2,(2*0)+0*this.left_cannibals)+Math.pow(2,(2*0)+1*this.right_cannibals)+Math.pow(2,(2*1)+0*this.left_missionaries)+Math.pow(2,(2*1)+1*this.right_missionaries));
+    }
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(this.left_missionaries != ((State)obj).left_missionaries) return false;
+        if(this.right_missionaries != ((State)obj).right_missionaries) return false;
+        if(this.left_cannibals != ((State)obj).left_cannibals) return false;
+        if(this.right_cannibals != ((State)obj).right_cannibals) return false;
+        if(this.boat != ((State)obj).boat) return false;
+        return true;
+    }
+
     @Override
     public int hashCode()
     {
@@ -93,8 +126,10 @@ public class State
                 ", father=" + this.father +
                 '}';
     }
-    int identifier()
+
+    @Override
+    public int compareTo(@NotNull State s)
     {
-        return (int) (Math.pow(2,(2*0)+0*this.left_cannibals)+Math.pow(2,(2*0)+1*this.right_cannibals)+Math.pow(2,(2*1)+0*this.left_missionaries)+Math.pow(2,(2*1)+1*this.right_missionaries));
+        return Double.compare(this.score, s.score); // compare based on the heuristic score.
     }
 }
