@@ -12,6 +12,7 @@ public class State implements Comparable<State> {
     private int boat_seats,max_seats;
     private State father=null;
     private int score=0;
+    //@TODO add max steps
 
     public State(int right_cannibals,int left_cannibals, int right_missionaries,int left_missionaries, char boat, int  boat_seats)
     {
@@ -59,13 +60,13 @@ public class State implements Comparable<State> {
     {
         ArrayList<State> children = new ArrayList<>();
         if(boat=='L') {
-            //@TODO Make it close set
+
             //@TODO Stop single pass
             for(int i=1;i<=max_seats;i++) {
                 for(int j=max_seats-i;j>=0;j--) {
                     State child = new State(right_cannibals+i, left_cannibals - i, right_missionaries+j, left_missionaries-j, 'R', boat_seats);
                     if (child.canPass()&& !child.equals(this.father)) {
-                        child.evaluate();
+
                         children.add(child);
                         child.setFather(this);
                     }
@@ -78,7 +79,7 @@ public class State implements Comparable<State> {
                 for(int j=max_seats-i;j>=0;j--) {
                     State child = new State(right_cannibals-i, left_cannibals + i, right_missionaries-j, left_missionaries+j, 'L', boat_seats);
                     if (child.canPass() && !child.equals(this.father)) {
-                        child.evaluate();
+
                         children.add(child);
                         child.setFather(this);
                     }
@@ -101,6 +102,7 @@ public class State implements Comparable<State> {
         return (int) (Math.pow(2,(2*0)+0*this.left_cannibals)+Math.pow(2,(2*0)+1*this.right_cannibals)+Math.pow(2,(2*1)+0*this.left_missionaries)+Math.pow(2,(2*1)+1*this.right_missionaries));
     }
     @Override
+    //@TODO FIX
     public boolean equals(Object obj)
     {
         if(this.left_missionaries != ((State)obj).left_missionaries) return false;

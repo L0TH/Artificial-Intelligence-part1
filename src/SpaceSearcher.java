@@ -1,40 +1,61 @@
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
 public class SpaceSearcher
 {
-    private ArrayList<State> frontier;
+    private ArrayList<State> states;
     private HashSet<State> closedSet;
 
     SpaceSearcher()
     {
-        this.frontier=new ArrayList<State>();
-        this.closedSet=new HashSet<State>();
+        this.states = null;
+        this.closedSet = null;
     }
 
-    State BestFSClosedSet(State initialState)
-    {
-        if(initialState.isFinal()) return initialState;
-        // step 1: put initial state in the frontier.
-        this.frontier.add(initialState);
-        this.closedSet.add(initialState);
-        // step 2: check for empty frontier.
-        while(this.frontier.size() > 0)
-        {
-            // step 3: get the first node out of the frontier.
-            State currentState = this.frontier.remove(0);
-            // step 4: if final state, return.
-            if(currentState.isFinal()) return currentState;
+    //BFS Algorithm Implementation
 
-            // step 5: if the node is not in the closed set, put the children at the frontier.
-            // else go to step 2.
-            if(!this.closedSet.contains(currentState))
+
+    //BestFS Algorithm Implementation
+    //The heuristic parameter chooses among the available heuristics
+    public State BestFS(State initialState, int heuristic)
+    {
+        this.states = new ArrayList<State>();
+        this.states.add(initialState);
+        while(this.states.size() > 0)
+        {
+            State currentState = this.states.remove(0);
+            if(currentState.isFinal())
+            {
+                return currentState;
+            }
+            //We generate the children and calculate the heuristic values
+            this.states.addAll(currentState.getChildren());
+            //We sort all the children according to their heuristic scores
+            Collections.sort(this.states);
+        }
+        return null;
+    }
+
+    //BestFS Algorithm Implementation with Closed Set
+    public State BestFSClosedSet(State initialState)
+    {
+        this.states = new ArrayList<State>();
+        this.closedSet = new HashSet<State>();
+        this.states.add(initialState);
+        while(this.states.size() > 0)
+        {
+            State currentState = this.states.remove(0);
+            if(currentState.isFinal())
+            {
+                return currentState;
+            }
+            if(!closedSet.contains(currentState))
             {
                 this.closedSet.add(currentState);
-                this.frontier.addAll(currentState.getChildren());
-                // step 6: sort the frontier based on the heuristic score to get best as first
-                Collections.sort(this.frontier); // sort the frontier to get best as first
+                this.states.addAll(currentState.getChildren());
+                Collections.sort(this.states);
             }
         }
         return null;
