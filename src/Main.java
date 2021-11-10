@@ -5,12 +5,12 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("hello main");
-        State initialState = new State(0, 3, 0, 3, 'L', 2,5);
+        State initialState = new State(  30, 5 ,100);
 
         SpaceSearcher searcher = new SpaceSearcher();
-
-        State terminalState = searcher.BestFSClosedSet(initialState);
-
+        long start = System.currentTimeMillis();
+        State terminalState = searcher.AStarBestFSClosedSet(initialState);
+        long end = System.currentTimeMillis();
 
         if(terminalState == null) System.out.println("Could not find a solution.");
 
@@ -34,6 +34,8 @@ public class Main {
 
 
         }
+        System.out.println("AStarBestFS with closed set search time: " + (double)(end - start) / 1000 + " sec.");
+
 
 
     }

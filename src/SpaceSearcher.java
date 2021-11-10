@@ -8,18 +8,21 @@ public class SpaceSearcher
     private ArrayList<State> states;
     private HashSet<State> closedSet;
     private boolean flag=false;
+    private ArrayList<State> child;
 
     SpaceSearcher()
     {
         this.states = null;
         this.closedSet = null;
+        this.child=null;
     }
 
     //BestFS Algorithm Implementation with Closed Set
-    public State BestFSClosedSet(State initialState)
+    public State AStarBestFSClosedSet(State initialState)
     {
         this.states = new ArrayList<State>();
         this.closedSet = new HashSet<State>();
+        this.child = new ArrayList<>();
         this.states.add(initialState);
         while(this.states.size() > 0)
         {
@@ -35,8 +38,14 @@ public class SpaceSearcher
             if(!closedSet.contains(currentState) && flag!=true)
             {
                 this.closedSet.add(currentState);
-
-                this.states.addAll(currentState.getChildren());
+                this.child=currentState.getChildren();
+                for(int i=0;i<child.size(); i++)
+                {
+                    if(child.get(i).getFather()!=null) {
+                        child.get(i).setScore(child.get(i).getFather().getScore());
+                    }
+                }
+                this.states.addAll(this.child);
                 Collections.sort(this.states);
             }
         }

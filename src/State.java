@@ -15,7 +15,17 @@ public class State implements Comparable<State> {
     int max_steps;
     //@TODO add max steps
 
-
+    public State(int left_cannibals,int  boat_seats,int max_steps)
+    {
+        this.right_cannibals=0;
+        this.left_cannibals=left_cannibals;
+        this.right_missionaries=0;
+        this.left_missionaries=left_cannibals;
+        this.boat='L';
+        this.boat_seats=boat_seats;
+        this.max_seats=boat_seats;
+        this.max_steps=max_steps;
+    }
     public State(int right_cannibals,int left_cannibals, int right_missionaries,int left_missionaries, char boat, int  boat_seats,int max_steps)
     {
         this.right_cannibals=right_cannibals;
@@ -55,6 +65,9 @@ public class State implements Comparable<State> {
         return this.father;
     }
 
+    void setScore(int score){this.score+=score;}
+    int getScore(){return this.score;}
+
     ArrayList<State> getChildren()
     {
         ArrayList<State> children = new ArrayList<>();
@@ -64,7 +77,7 @@ public class State implements Comparable<State> {
                 for(int j=max_seats-i;j>=0;j--) {
                     State child = new State(right_cannibals+i, left_cannibals - i, right_missionaries+j, left_missionaries-j, 'R', boat_seats,max_steps-1);
                     if (child.canPass()) {
-
+                        child.evaluate();
                         children.add(child);
                         child.setFather(this);
                     }
@@ -79,7 +92,7 @@ public class State implements Comparable<State> {
                     {
                         State child = new State(right_cannibals-i, left_cannibals + i, right_missionaries-j, left_missionaries+j, 'L', boat_seats,max_steps-1);
                         if (child.canPass() && !child.equals(this.father)) {
-
+                            child.evaluate();
                             children.add(child);
                             child.setFather(this);
                         }
