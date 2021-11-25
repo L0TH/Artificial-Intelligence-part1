@@ -8,29 +8,32 @@ public class Chromosome implements Comparable<Chromosome>
 
     //Integer that holds the fitness score of the chromosome
     private int fitness;
-
+    public int N;
     //Constructs a randomly created chromosome
-    Chromosome()
+    Chromosome(int N)
     {
-        this.genes = new int[8];
+        this.N = N;
+        this.genes = new int[N];
         Random r = new Random();
         for(int i = 0; i < this.genes.length; i++)
         {
-            this.genes[i] = r.nextInt(8);
+            this.genes[i] = r.nextInt(N);
         }
         this.calculateFitness();
     }
 
     //Constructs a copy of a chromosome
-    Chromosome(int[] genes)
+    Chromosome(int[] genes, int N)
     {
-        this.genes = new int[8];
+        this.genes = new int[N];
         for(int i = 0; i < this.genes.length; i++)
         {
             this.genes[i] = genes[i];
         }
         this.calculateFitness();
     }
+
+
 
     //Calculates the fitness score of the chromosome as the number queen pairs that are NOT threatened
     //The maximum number of queen pairs that are NOT threatened is (n-1) + (n-2) + ... + (n-n) = 7 + 6 + 5 + 4 + 3 + 2 + 1 = 28
@@ -55,8 +58,9 @@ public class Chromosome implements Comparable<Chromosome>
     void mutate()
     {
         Random r = new Random();
-        this.genes[r.nextInt(8)] = r.nextInt(8);
+        this.genes[r.nextInt(N)] = r.nextInt(N);
         this.calculateFitness();
+
     }
 
     public int[] getGenes() {
@@ -66,7 +70,9 @@ public class Chromosome implements Comparable<Chromosome>
     public void setGenes(int[] genes) {
         this.genes = genes;
     }
-
+    public void setN(int N){
+        this.N = N;
+    }
     public int getFitness() {
         return this.fitness;
     }

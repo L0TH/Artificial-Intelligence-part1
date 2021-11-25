@@ -8,9 +8,10 @@ public class GeneticAlgorithm
 {
     private ArrayList<Chromosome> population; // population with chromosomes
     private ArrayList<Integer> occurrences; // list with chromosomes (indices) based on fitness score
-
-    GeneticAlgorithm()
+    private int N;
+    GeneticAlgorithm(int N)
     {
+        this.N = N;
         this.population = null;
         this.occurrences = null;
     }
@@ -31,6 +32,7 @@ public class GeneticAlgorithm
                 //selecting a specific chromosome depends on its fitness score
                 int xIndex = this.occurrences.get(r.nextInt(this.occurrences.size()));
                 Chromosome xParent = this.population.get(xIndex);
+
                 int yIndex = this.occurrences.get(r.nextInt(this.occurrences.size()));
                 while(xIndex == yIndex)
                 {
@@ -44,7 +46,10 @@ public class GeneticAlgorithm
                 //We might then mutate the children
                 if(r.nextDouble() < mutationProbability)
                 {
+                    //TODO check N is my opinion to work i don't think is ok
+                    children[0].setN(N);
                     children[0].mutate();
+                    children[1].setN(N);
                     children[1].mutate();
                 }
                 //...and finally add them to the new population
@@ -69,7 +74,7 @@ public class GeneticAlgorithm
         this.population = new ArrayList<>();
         for(int i = 0; i < populationSize; i++)
         {
-            this.population.add(new Chromosome());
+            this.population.add(new Chromosome(N));
         }
         this.updateOccurrences();
     }
@@ -94,11 +99,10 @@ public class GeneticAlgorithm
     Chromosome[] reproduce(Chromosome x, Chromosome y)
     {
         Random r = new Random();
-
         //Randomly choose the intersection point
-        int intersectionPoint = r.nextInt(8);
-        int[] firstChild = new int[8];
-        int[] secondChild = new int[8];
+        int intersectionPoint = r.nextInt(this.N);
+        int[] firstChild = new int[this.N];
+        int[] secondChild = new int[this.N];
 
         //The first child has the left side of the x chromosome up to the intersection point...
         //The second child has the left side of the y chromosome up to the intersection point...
@@ -113,7 +117,9 @@ public class GeneticAlgorithm
         {
             firstChild[i] = y.getGenes()[i];
             secondChild[i] = x.getGenes()[i];
+
+
         }
-        return new Chromosome[] {new Chromosome(firstChild), new Chromosome(secondChild)};
+        return new Chromosome[] {new Chromosome(firstChild, this.N), new Chromosome(secondChild, this.N)};
     }
 }
