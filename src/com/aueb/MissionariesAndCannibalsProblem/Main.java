@@ -1,10 +1,11 @@
+package com.aueb.MissionariesAndCannibalsProblem;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("hello main");
         State initialState = new State(  30, 5 ,10);
 
         SpaceSearcher searcher = new SpaceSearcher();
