@@ -75,6 +75,7 @@ public class State implements Comparable<State> {
         if(boat=='L') {
             for(int i=0;i<=max_seats;i++) {
                 for(int j=max_seats-i;j>=0;j--) {
+                    if(i>j) continue;
                     State child = new State(right_cannibals+i, left_cannibals - i, right_missionaries+j, left_missionaries-j, 'R', boat_seats,max_steps-1);
                     if (child.canPass()) {
                         child.evaluate();
@@ -88,6 +89,7 @@ public class State implements Comparable<State> {
         else {
             for(int i=0;i<=max_seats;i++) {
                 for(int j=max_seats-i;j>=0;j--) {
+                    if(i>j) continue;
                     if(i>0 || j>0)
                     {
                         State child = new State(right_cannibals-i, left_cannibals + i, right_missionaries-j, left_missionaries+j, 'L', boat_seats,max_steps-1);
