@@ -11,11 +11,17 @@ public class Main
     }
     public static void main(String[] args)
     {
-        int N = 10;
-        GeneticAlgorithm algorithm = new GeneticAlgorithm(N);
-        //populationSize, mutationProbability, maximumSteps, minimumFitness
-        Chromosome solution = algorithm.run(1000 + N, 0.08, 1000 + N, calculateMinFitness(N));
-        solution.print();
+        for(int i =3; i < 150; i++) {
+            int N = i;
+            long start = System.nanoTime();
+            GeneticAlgorithm algorithm = new GeneticAlgorithm(N);
+            //populationSize, mutationProbability, maximumSteps, minimumFitness
+            Chromosome solution = algorithm.run(1000 + N, 0.08, 1000 + N, calculateMinFitness(N));
+            long end = System.nanoTime();
+            long time = (end - start)/1000000000;
+            System.out.println(N + " : " + time +" seconds");
+            solution.print();
+        }
     }
 
 }
