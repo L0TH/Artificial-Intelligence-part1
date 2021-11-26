@@ -1,3 +1,5 @@
+package com.aueb.MissionariesAndCannibalsProblem;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
