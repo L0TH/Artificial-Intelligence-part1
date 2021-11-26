@@ -59,8 +59,9 @@ public class Chromosome implements Comparable<Chromosome>
     {
         Random r = new Random();
         this.genes[r.nextInt(N)] = r.nextInt(N);
+        this.genes[r.nextInt(N)] = r.nextInt(N);
+        this.genes[r.nextInt(N)] = r.nextInt(N);
         this.calculateFitness();
-
     }
 
     public int[] getGenes() {
