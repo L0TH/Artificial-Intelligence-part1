@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("hello main");
-        State initialState = new State(  30, 5 ,10);
+        State initialState = new State(  3, 4 ,100);
 
         SpaceSearcher searcher = new SpaceSearcher();
         long start = System.currentTimeMillis();
