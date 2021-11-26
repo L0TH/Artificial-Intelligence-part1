@@ -1,4 +1,4 @@
-
+package com.aueb.MissionariesAndCannibalsProblem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -148,7 +148,7 @@ public class State implements Comparable<State> {
     }
     public void print()
     {
-        System.out.println("State{" +
+        System.out.println("com.aueb.MissionariesAndCannibalsProblem.State{" +
                 "left_cannibals=" + left_cannibals +
                 ", left_missionaries=" + left_missionaries +
                 ", right_cannibals=" + right_cannibals +
