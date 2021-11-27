@@ -11,10 +11,11 @@ public class Main
     }
     public static void main(String[] args)
     {
-        for(int i =3; i < 15; i++) {
+        for(int i =3; i <= 15; i++) {
             int N = i;
             GeneticAlgorithm algorithm = new GeneticAlgorithm(N);
             Chromosome solution = algorithm.run(1000 + N, 0.08, 1000 + N, calculateMinFitness(N));
+            System.out.println("N = " + N);
             solution.print();
         }
     }
