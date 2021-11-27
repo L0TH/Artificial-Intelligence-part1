@@ -6,8 +6,13 @@ import java.util.Collections;
 public class Main {
 
     public static void main(String[] args) {
+        /*
+            N = Number of (N) cannibals and (N) missioners 2N in total
+            M = Boat seats
+            K = Max steps allowed
+         */
 
-        State initialState = new State(  3, 2 ,1000);
+        State initialState = new State(  100, 10,80);
 
         SpaceSearcher searcher = new SpaceSearcher();
         long start = System.currentTimeMillis();
@@ -18,16 +23,16 @@ public class Main {
 
         else
         {
-            // print the path from beggining to start.
-            State temp = terminalState; // begin from the end.
+
+            State temp = terminalState;
             ArrayList<State> path = new ArrayList<State>();
             path.add(temp);
-            while(temp.getFather() != null) // if father is null, then we are at the root.
+            while(temp.getFather() != null)
             {
                 path.add(temp.getFather());
                 temp = temp.getFather();
             }
-            // reverse the path and print.
+
             Collections.reverse(path);
             for(State item: path)
             {
