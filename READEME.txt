@@ -1,3 +1,4 @@
+#Compile
 #For better developement in the same reporistorie we have seperate the problems in package
 #compile the first problem
 javac -d . src/com/aueb/MissionariesAndCannibalsProblem/*.java
