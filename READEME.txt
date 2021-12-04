@@ -1,0 +1,9 @@
+#For better developement in the same reporistorie we have seperate the problems in package
+#compile the first problem
+javac -d . src/com/aueb/MissionariesAndCannibalsProblem/*.javac
+#compile the second probelem
+javac -d . src/com/aueb/QueenChess/*.javac
+#run the first project
+java src/com/aueb/MissionariesAndCannibalsProblem/Main.javac
+#run the second project
+java src/com/aueb/QueenChess/Main.javac
