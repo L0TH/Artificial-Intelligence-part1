@@ -4,6 +4,6 @@ javac -d . src/com/aueb/MissionariesAndCannibalsProblem/*.java
 #compile the second probelem
 javac -d . src/com/aueb/QueenChess/*.java
 #run the first project
-java src/com/aueb/MissionariesAndCannibalsProblem/Main
+java com/aueb/MissionariesAndCannibalsProblem/Main
 #run the second project
-java src/com/aueb/QueenChess/Main
+java com/aueb/QueenChess/Main
